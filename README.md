@@ -24,16 +24,16 @@ http://localhost:8080/swagger/
 Run unit test cases by running following command on the terminal:
 pytest
 
-Deployment:
-Approach 1: ( Naive Approach )
+Deployment:</br>
+Approach 1: ( Naive Approach )</br>
 This approach is when the architecture is a basic setup of EC2 server/s and the code just needs to be
-deployed to the EC2s. 
--Creating a Github action workflow which triggers whenever we push a new build
+deployed to the EC2s. </br>
+-Creating a Github action workflow which triggers whenever we push a new build</br>
 -The Github action workflow has a file called "workflow.yml" that has bunch of jobs and build steps which
-could be configured based on the environment.
-Steps:
--Create Environments under Settings in Github section to provide our app secrets, aws secrets etc.
--Then, create a file .github/workflows/workflow.yml that would look somewhat like below:
+could be configured based on the environment.</br>
+Steps:</br>
+-Create Environments under Settings in Github section to provide our app secrets, aws secrets etc.</br>
+-Then, create a file .github/workflows/workflow.yml that would look somewhat like below:</br>
 
         name: "Development Build"
         on:
@@ -96,14 +96,14 @@ Steps:
                     echo ${USER_PASSWORD} | sudo -S systemctl restart ${SERVICE_NAME} "
 
 
-Approach 2: ( AWS CodePipeline CI/CD )
-This approach could use more resources and depends if the team is using ECS cluster.
--Using a CodePipeline to upload the code which could be integrating with Github like third parties tools.
--CodePipeline behaves as Continuous Integration for our code workflow at this point.
+Approach 2: ( AWS CodePipeline CI/CD )</br>
+This approach could use more resources and depends if the team is using ECS cluster.</br>
+-Using a CodePipeline to upload the code which could be integrating with Github like third parties tools.</br>
+-CodePipeline behaves as Continuous Integration for our code workflow at this point.</br>
 -To make this work, we would create a buildspec.yml file in our project that should read and build the code
-from CodePipeline and push it to the AWS CodeBuild.
+from CodePipeline and push it to the AWS CodeBuild.</br>
 -Now at this point, we should have ECR endpoints, we will use this endpoints to deploy our dockerized Flask app in 
-a bit.
--Now, we could go ahead and create a ECS cluster that'd read the build from the ECR endpoints we just got from the above step.
+a bit.</br>
+-Now, we could go ahead and create a ECS cluster that'd read the build from the ECR endpoints we just got from the above step.</br>
 -This last could be done either manaully or could be automated creating another AWS CodeBuild Stage with another
-yaml script that'd push the build to the ECS.
+yaml script that'd push the build to the ECS.</br>
