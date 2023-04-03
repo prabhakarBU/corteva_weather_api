@@ -1,0 +1,935 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "description": "Following are some Corteva Weather Apis for you to extract Weather raw data and Weather Stats Data",
+    "version": "1.0.0",
+    "title": "Corteva Weather Api",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "/"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Weather Request",
+      "description": "APIs for requesting and returning weather request data"
+    }
+  ],
+  "paths": {
+    "/api/weather": {
+      "get": {
+        "tags": ["Weather Request"],
+        "summary": "Returns corteva weather",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/components/schemas/weatherData"
+            }
+          }
+        }
+      }
+    },
+    "/api/weather/{page}": {
+      "parameters": [
+        {
+          "name": "page",
+          "in": "path",
+          "required": true,
+          "description": "Enter the page number here. Each page has offset of 5.",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": ["Weather Request With Page"],
+        "summary": "Get weather request with given page",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "page",
+            "required": true,
+            "description": "Weather Request page",
+            "schema": {
+              "$ref": "#/components/schemas/page"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/components/schemas/weatherData"
+            }
+          },
+          "400": {
+            "description": "Failed. Make sure the page number is a number."
+          },
+          "404": {
+            "description": "Failed. No more records found."
+          }
+        }
+      }
+    },
+    "/api/weather/{page}/{offset}": {
+      "parameters": [
+        {
+          "name": "page",
+          "in": "path",
+          "required": true,
+          "description": "Enter the page number here. Each page has offset of 5.",
+          "type": "string"
+        },
+        {
+            "name": "offset",
+            "in": "path",
+            "required": true,
+            "description": "Enter the offset here. Can customize your offset here.",
+            "type": "string"
+          }
+      ],
+      "get": {
+        "tags": ["Weather Request With Page and Offset"],
+        "summary": "Get weather request with given page and offset",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "page",
+            "required": true,
+            "description": "Weather Request page",
+            "schema": {
+              "$ref": "#/components/schemas/page"
+            }
+          },
+          {
+            "in": "path",
+            "name": "offset",
+            "required": true,
+            "description": "Weather Request page",
+            "schema": {
+              "$ref": "#/components/schemas/offset"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/components/schemas/weatherData"
+            }
+          },
+          "400": {
+            "description": "Failed. Make sure the page number and offset are numbers."
+          },
+          "404": {
+            "description": "Failed. No more records found."
+          }
+        }
+      }
+    },
+    "/api/weather/station/{stationId}/{page}": {
+        "parameters": [
+          {
+            "name": "stationId",
+            "in": "path",
+            "required": true,
+            "description": "Enter the stationId here.",
+            "type": "string"
+          },
+          {
+              "name": "page",
+              "in": "path",
+              "required": true,
+              "description": "Enter the page here. Each page has offset of 5.",
+              "type": "string"
+            }
+        ],
+        "get": {
+          "tags": ["Weather Request on a Station With Page and default Offset of 5"],
+          "summary": "Get weather request on a Station with given page and default offset of 5",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "stationId",
+              "required": true,
+              "description": "Weather Request Station",
+              "schema": {
+                "$ref": "#/components/schemas/stationId"
+              }
+            },
+            {
+              "in": "path",
+              "name": "page",
+              "required": true,
+              "description": "Weather Request page",
+              "schema": {
+                "$ref": "#/components/schemas/page"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/components/schemas/weatherData"
+              }
+            },
+            "400": {
+              "description": "Failed. Make sure the page number is number."
+            },
+            "404": {
+              "description": "Failed. No more records found."
+            }
+          }
+        }
+      },
+      "/api/weather/station/{stationId}/{page}/{offset}": {
+        "parameters": [
+          {
+            "name": "stationId",
+            "in": "path",
+            "required": true,
+            "description": "Enter the stationId here.",
+            "type": "string"
+          },
+          {
+              "name": "page",
+              "in": "path",
+              "required": true,
+              "description": "Enter the page here.",
+              "type": "string"
+            },
+            {
+                "name": "offset",
+                "in": "path",
+                "required": true,
+                "description": "Enter the page offset here.",
+                "type": "string"
+              }
+        ],
+        "get": {
+          "tags": ["Weather Request on a Station With Page and Offset"],
+          "summary": "Get weather request on a Station with given page and offset",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "stationId",
+              "required": true,
+              "description": "Weather Request Station",
+              "schema": {
+                "$ref": "#/components/schemas/stationId"
+              }
+            },
+            {
+              "in": "path",
+              "name": "page",
+              "required": true,
+              "description": "Weather Request page",
+              "schema": {
+                "$ref": "#/components/schemas/page"
+              }
+            },
+            {
+                "in": "path",
+                "name": "offset",
+                "required": true,
+                "description": "Weather Request page",
+                "schema": {
+                  "$ref": "#/components/schemas/offset"
+                }
+              }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/components/schemas/weatherData"
+              }
+            },
+            "400": {
+              "description": "Failed. Make sure the page number and offset are numbers."
+            },
+            "404": {
+              "description": "Failed. No more records found."
+            }
+          }
+        }
+      },
+      "/api/weather/date/{date}/{page}": {
+        "parameters": [
+          {
+            "name": "date",
+            "in": "path",
+            "required": true,
+            "description": "Enter the date here. (eg. 1985-01-01 )",
+            "type": "string"
+          },
+          {
+              "name": "page",
+              "in": "path",
+              "required": true,
+              "description": "Enter the page here. Each page has offset of 5.",
+              "type": "string"
+            }
+        ],
+        "get": {
+          "tags": ["Weather Request on a Date With Page and default Offset of 5"],
+          "summary": "Get weather request on a Date with given page and default offset fo 5",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "date",
+              "required": true,
+              "description": "Weather Request Date",
+              "schema": {
+                "$ref": "#/components/schemas/date"
+              }
+            },
+            {
+              "in": "path",
+              "name": "page",
+              "required": true,
+              "description": "Weather Request page",
+              "schema": {
+                "$ref": "#/components/schemas/page"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/components/schemas/weatherData"
+              }
+            },
+            "400": {
+              "description": "Failed. Make sure the page number is number."
+            },
+            "404": {
+              "description": "Failed. No more records found."
+            }
+          }
+        }
+      },
+      "/api/weather/date/{date}/{page}/{offset}": {
+        "parameters": [
+          {
+            "name": "date",
+            "in": "path",
+            "required": true,
+            "description": "Enter the date here. (eg. 1985-01-01 )",
+            "type": "string"
+          },
+          {
+              "name": "page",
+              "in": "path",
+              "required": true,
+              "description": "Enter the page here.",
+              "type": "string"
+            },
+            {
+                "name": "offset",
+                "in": "path",
+                "required": true,
+                "description": "Enter the page offset here.",
+                "type": "string"
+              }
+        ],
+        "get": {
+          "tags": ["Weather Request on a Date With Page and custom Offset."],
+          "summary": "Get weather request on a Date with given page and custom offset.",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "date",
+              "required": true,
+              "description": "Weather Request Date",
+              "schema": {
+                "$ref": "#/components/schemas/date"
+              }
+            },
+            {
+              "in": "path",
+              "name": "page",
+              "required": true,
+              "description": "Weather Request page",
+              "schema": {
+                "$ref": "#/components/schemas/page"
+              }
+            },
+            {
+                "in": "path",
+                "name": "offset",
+                "required": true,
+                "description": "Weather Request page",
+                "schema": {
+                  "$ref": "#/components/schemas/offset"
+                }
+              }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/components/schemas/weatherData"
+              }
+            },
+            "400": {
+              "description": "Failed. Make sure the page number is number."
+            },
+            "404": {
+              "description": "Failed. No more records found."
+            }
+          }
+        }
+      },
+      "/api/weather/year/{year}/{page}": {
+        "parameters": [
+          {
+            "name": "year",
+            "in": "path",
+            "required": true,
+            "description": "Enter the year here. (eg. 1985 )",
+            "type": "string"
+          },
+          {
+              "name": "page",
+              "in": "path",
+              "required": true,
+              "description": "Enter the page here.",
+              "type": "string"
+            }
+        ],
+        "get": {
+          "tags": ["Weather Request on a Year With Page and default Offset of 5."],
+          "summary": "Get weather request on a Year with given page and default offset of 5.",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "year",
+              "required": true,
+              "description": "Weather Request Year",
+              "schema": {
+                "$ref": "#/components/schemas/year"
+              }
+            },
+            {
+              "in": "path",
+              "name": "page",
+              "required": true,
+              "description": "Weather Request page",
+              "schema": {
+                "$ref": "#/components/schemas/page"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/components/schemas/weatherData"
+              }
+            },
+            "400": {
+              "description": "Failed. Make sure the page number is number."
+            },
+            "404": {
+              "description": "Failed. No more records found."
+            }
+          }
+        }
+      },
+      "/api/weather/year/{year}/{page}/{offset}": {
+        "parameters": [
+          {
+            "name": "year",
+            "in": "path",
+            "required": true,
+            "description": "Enter the year here. (eg. 1985 )",
+            "type": "string"
+          },
+          {
+              "name": "page",
+              "in": "path",
+              "required": true,
+              "description": "Enter the page here.",
+              "type": "string"
+            },
+            {
+                "name": "offset",
+                "in": "path",
+                "required": true,
+                "description": "Enter the page offset here.",
+                "type": "string"
+              }
+        ],
+        "get": {
+          "tags": ["Weather Request on a Year With Page and custom Offset."],
+          "summary": "Get weather request on a Year with given page and custom offset.",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "year",
+              "required": true,
+              "description": "Weather Request Year",
+              "schema": {
+                "$ref": "#/components/schemas/year"
+              }
+            },
+            {
+              "in": "path",
+              "name": "page",
+              "required": true,
+              "description": "Weather Request Page",
+              "schema": {
+                "$ref": "#/components/schemas/page"
+              }
+            },
+            {
+                "in": "path",
+                "name": "offset",
+                "required": true,
+                "description": "Weather Request Offset",
+                "schema": {
+                  "$ref": "#/components/schemas/offset"
+                }
+              }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/components/schemas/weatherData"
+              }
+            },
+            "400": {
+              "description": "Failed. Make sure the page number is number."
+            },
+            "404": {
+              "description": "Failed. No more records found."
+            }
+          }
+        }
+      },
+      "/api/weather/stats/{page}": {
+        "parameters": [
+          {
+              "name": "page",
+              "in": "path",
+              "required": true,
+              "description": "Enter the page here.",
+              "type": "string"
+            }
+        ],
+        "get": {
+          "tags": ["Weather Stats Request With Page and default Offset of 5."],
+          "summary": "Get weather Stats request given page and default offset of 5.",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "page",
+              "required": true,
+              "description": "Weather Request Page",
+              "schema": {
+                "$ref": "#/components/schemas/page"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/components/schemas/weatherData"
+              }
+            },
+            "400": {
+              "description": "Failed. Make sure the page number is number."
+            },
+            "404": {
+              "description": "Failed. No more records found."
+            }
+          }
+        }
+      },
+      "/api/weather/stats/{page}/{offset}": {
+        "parameters": [
+          {
+              "name": "page",
+              "in": "path",
+              "required": true,
+              "description": "Enter the page here.",
+              "type": "string"
+            },
+            {
+                "name": "offset",
+                "in": "path",
+                "required": true,
+                "description": "Enter the offset here.",
+                "type": "string"
+              }
+        ],
+        "get": {
+          "tags": ["Weather Stats Request With Page and custom Offset."],
+          "summary": "Get weather Stats request with page and custom offset.",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "page",
+              "required": true,
+              "description": "Weather Request Page",
+              "schema": {
+                "$ref": "#/components/schemas/page"
+              }
+            },
+            {
+                "in": "path",
+                "name": "offset",
+                "required": true,
+                "description": "Weather Request Offset",
+                "schema": {
+                  "$ref": "#/components/schemas/offset"
+                }
+              }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/components/schemas/weatherData"
+              }
+            },
+            "400": {
+              "description": "Failed. Make sure the page number is number."
+            },
+            "404": {
+              "description": "Failed. No more records found."
+            }
+          }
+        }
+      },
+      "/api/weather/stats/station/{stationId}/{page}": {
+        "parameters": [
+          {
+            "name": "stationId",
+            "in": "path",
+            "required": true,
+            "description": "Enter the stationId here.",
+            "type": "string"
+          },
+          {
+              "name": "page",
+              "in": "path",
+              "required": true,
+              "description": "Enter the page here. Each page has offset of 5.",
+              "type": "string"
+            }
+        ],
+        "get": {
+          "tags": ["Weather Stats Request on a Station With Page and default Offset of 5"],
+          "summary": "Get weather Stats request on a Station with given page and default offset of 5",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "stationId",
+              "required": true,
+              "description": "Weather Request Station",
+              "schema": {
+                "$ref": "#/components/schemas/stationId"
+              }
+            },
+            {
+              "in": "path",
+              "name": "page",
+              "required": true,
+              "description": "Weather Request page",
+              "schema": {
+                "$ref": "#/components/schemas/page"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/components/schemas/weatherData"
+              }
+            },
+            "400": {
+              "description": "Failed. Make sure the page number is number."
+            },
+            "404": {
+              "description": "Failed. No more records found."
+            }
+          }
+        }
+      },
+      "/api/weather/stats/station/{stationId}/{page}/{offset}": {
+        "parameters": [
+          {
+            "name": "stationId",
+            "in": "path",
+            "required": true,
+            "description": "Enter the stationId here.",
+            "type": "string"
+          },
+          {
+              "name": "page",
+              "in": "path",
+              "required": true,
+              "description": "Enter the page here.",
+              "type": "string"
+            },
+            {
+                "name": "offset",
+                "in": "path",
+                "required": true,
+                "description": "Enter the page offset here.",
+                "type": "string"
+              }
+        ],
+        "get": {
+          "tags": ["Weather Stats Request on a Station With Page and Offset"],
+          "summary": "Get weather stats request on a Station with given page and offset",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "stationId",
+              "required": true,
+              "description": "Weather Request Station",
+              "schema": {
+                "$ref": "#/components/schemas/stationId"
+              }
+            },
+            {
+              "in": "path",
+              "name": "page",
+              "required": true,
+              "description": "Weather Request page",
+              "schema": {
+                "$ref": "#/components/schemas/page"
+              }
+            },
+            {
+                "in": "path",
+                "name": "offset",
+                "required": true,
+                "description": "Weather Request page",
+                "schema": {
+                  "$ref": "#/components/schemas/offset"
+                }
+              }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/components/schemas/weatherData"
+              }
+            },
+            "400": {
+              "description": "Failed. Make sure the page number and offset are numbers."
+            },
+            "404": {
+              "description": "Failed. No more records found."
+            }
+          }
+        }
+      },
+      "/api/weather/stats/year/{year}/{page}": {
+        "parameters": [
+          {
+            "name": "year",
+            "in": "path",
+            "required": true,
+            "description": "Enter the year here. (eg. 1985 )",
+            "type": "string"
+          },
+          {
+              "name": "page",
+              "in": "path",
+              "required": true,
+              "description": "Enter the page here.",
+              "type": "string"
+            }
+        ],
+        "get": {
+          "tags": ["Weather Stats Request on a Year With Page and default Offset of 5."],
+          "summary": "Get weather stats request on a Year with given page and default offset of 5.",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "year",
+              "required": true,
+              "description": "Weather Request Year",
+              "schema": {
+                "$ref": "#/components/schemas/year"
+              }
+            },
+            {
+              "in": "path",
+              "name": "page",
+              "required": true,
+              "description": "Weather Request page",
+              "schema": {
+                "$ref": "#/components/schemas/page"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/components/schemas/weatherData"
+              }
+            },
+            "400": {
+              "description": "Failed. Make sure the page number is number."
+            },
+            "404": {
+              "description": "Failed. No more records found."
+            }
+          }
+        }
+      },
+      "/api/weather/stats/year/{year}/{page}/{offset}": {
+        "parameters": [
+          {
+            "name": "year",
+            "in": "path",
+            "required": true,
+            "description": "Enter the year here. (eg. 1985 )",
+            "type": "string"
+          },
+          {
+              "name": "page",
+              "in": "path",
+              "required": true,
+              "description": "Enter the page here.",
+              "type": "string"
+            },
+            {
+                "name": "offset",
+                "in": "path",
+                "required": true,
+                "description": "Enter the page offset here.",
+                "type": "string"
+              }
+        ],
+        "get": {
+          "tags": ["Weather Stats Request on a Year With Page and custom Offset."],
+          "summary": "Get weather stats request on a Year with given page and custom offset.",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "year",
+              "required": true,
+              "description": "Weather Request Year",
+              "schema": {
+                "$ref": "#/components/schemas/year"
+              }
+            },
+            {
+              "in": "path",
+              "name": "page",
+              "required": true,
+              "description": "Weather Request Page",
+              "schema": {
+                "$ref": "#/components/schemas/page"
+              }
+            },
+            {
+                "in": "path",
+                "name": "offset",
+                "required": true,
+                "description": "Weather Request Offset",
+                "schema": {
+                  "$ref": "#/components/schemas/offset"
+                }
+              }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/components/schemas/weatherData"
+              }
+            },
+            "400": {
+              "description": "Failed. Make sure the page number is number."
+            },
+            "404": {
+              "description": "Failed. No more records found."
+            }
+          }
+        }
+      }
+  },
+  "components": {
+    "schemas": {
+      "page": {
+        "properties": {
+          "page": {
+            "type": "number"
+          }
+        }
+      },
+      "offset": {
+        "properties": {
+          "offset": {
+            "type": "number"
+          }
+        }
+      },
+      "stationId": {
+        "properties": {
+          "offset": {
+            "type": "string"
+          }
+        }
+      },
+      "date": {
+        "properties": {
+          "offset": {
+            "type": "string"
+          }
+        }
+      },
+      "year": {
+        "properties": {
+          "page": {
+            "type": "string"
+          }
+        }
+      },
+      "weatherData": {
+        "type": "object",
+        "properties": {
+          "stationId": {
+            "type": "string",
+            "format": "string"
+          },
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "maxtemp": {
+            "type": "string",
+            "format": "number"
+          },
+          "mintemp": {
+            "type": "string",
+            "format": "number"
+          },
+          "precipitation": {
+            "type": "string",
+            "format": "number"
+          }
+        }
+      }
+    }
+  }
+}
