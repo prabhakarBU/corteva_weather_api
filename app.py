@@ -2,13 +2,17 @@ from flask_swagger_ui import get_swaggerui_blueprint
 from flask import Flask, jsonify, request, abort
 from datetime import datetime, timedelta
 import pymysql
+import configparser
+
+config = configparser.ConfigParser()
+config.read('dbconfig.ini')
 
 app = Flask(__name__)
 
-connection = pymysql.connect(host='localhost',
-                             user='root',
-                             password='root',
-                             db='cortevaweather')
+connection = pymysql.connect(host=config['mysqlDB']['host'],
+                             user=config['mysqlDB']['user'],
+                             password=config['mysqlDB']['pass'],
+                             db=config['mysqlDB']['db'])
 
 ### swagger specific ###
 SWAGGER_URL = '/swagger'
