@@ -86,14 +86,3 @@ def testGetAllWeatherStatsDataByYearPaginatedWithOffset():
     assert len(res) == 5
     assert response.status_code == 200
     assert type(res) is list
-
-
-# @pytest.mark.get_request
-# def test_get_book_by_id():
-#     response = app.test_client().get('/bookapi/books/1')
-#     res = json.loads(response.data.decode('utf-8')).get("Book")
-#     print(res)
-#     assert res['id'] == 1
-#     assert res['author'] == 'Havard'
-#     assert res['title'] == 'CS50'
-#     assert response.status_code == 200
