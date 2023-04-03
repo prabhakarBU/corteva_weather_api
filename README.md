@@ -6,12 +6,14 @@ Go to the project foler.
 Run pip install -r requirements.txt
 
 Configure your Database:
-Update your database details under dbconfig.ini file :
+Update your database details under ``` dbconfig.ini ``` file :
+```
 [mysqlDB]
 host = localhost
 db = cortevaweather
 user = root
 pass = root
+```
 
 Run ``` python app.py ``` to run the app on port 8080.
 
